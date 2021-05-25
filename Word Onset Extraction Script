@@ -1,0 +1,28 @@
+textgrid = Read from file... C:\Users\alimes\Desktop\audiobook\grimm_20_2_normalized.TextGrid
+numberOfIntervals = Get number of intervals... 1
+number = Get number of intervals... 3
+file1$ = "C:\Users\alimes\Desktop\audiobook\20grimm2.csv"; change name to match file 
+#file2$ = "C:\Users\alimes\Desktop\audiobook\phonemes.csv"
+object_info$ = Info
+filename$ = extractLine$(object_info$, "Object name:")
+fileappend "'file1$'" word,start,end,duration,file'newline$'
+for i from 1 to numberOfIntervals
+	word$ = Get label of interval... 1 i
+	starttime = Get start point... 1 i
+	endtime = Get end point... 1 i
+	duration = endtime - starttime
+	if word$ = "" 
+		a = 1
+	elsif word$ = "<P>"
+		b = 0
+	else 
+		fileappend "'file1$'" 'word$', 'starttime', 'endtime', 'duration', 'filename$' 'newline$'
+		#for j from 1 to number
+			#phon$ = Get label of interval... 3 j
+			#start = Get start point... 3 j
+			#end = Get end point... 3 j
+			#if start = starttime
+				#length = end - start
+				#fileappend "'file2$'" 'phon$', 'start', 'end', 'length' 'newline$'
+			#endif
+		#endfor
