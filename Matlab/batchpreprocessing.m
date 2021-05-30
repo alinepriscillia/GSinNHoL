@@ -1,4 +1,6 @@
 function batchpreprocessing(Subjectm)
+% preprocessing function to be run on multiple subjects at once 
+
 currentdir = 'W:\shared\Aline\thesis_allsubjects';
 eval(Subjectm)
 
