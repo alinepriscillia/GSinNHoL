@@ -3,10 +3,8 @@ function [trl, event] = audiobooktrialfun_SO(cfg)
 %Opening the MEG file and reading events into memory
 
 baseloc = 'K:\audiobook\';
-%dataloc = 'C:\Users\alimes\Desktop\MEGdata\sub001\';
 
-cfg2 = []; %had to make a second one to have it run for batch
-%cfg.dataset = [dataloc '\sub001.ds']; 
+cfg2 = []; %had to make a second one to have it run for batch preprocessing
 cfg2.dataset = cfg.dataset;
 hdr = ft_read_header(cfg2.dataset);  
 event = ft_read_event(cfg2.dataset); 
@@ -21,7 +19,6 @@ sel = find(strcmp({event.type}, 'UPPT001')); %find the story triggers
 event = event(sel);
 
 TimingInfo = readtable([baseloc 'wordinfo.csv']);
-%load([baseloc 'sub001_info.mat'])
 
 % read in the original .wav files
 allwavs = dir([baseloc '*.wav']);
@@ -54,11 +51,7 @@ for cntword = 1:height(TimingInfo)
    trinx = find([event.value] == story);
    trinx = event(trinx(story_part)+1).sample;   
    MEGep = audch.trial{1}(round(trinx+TIS*fs-eppre*fs):round(trinx+TIS*fs+epw*fs));
-         
-   %close all
-   %plot(wavep./max(wavep));
-   %hold on
-   %plot(MEGep./max(MEGep)+1);
+    
 
    % crosscorrelation to correct
    [xc, lags] = xcorr(wavep, MEGep,'normalized');   
@@ -78,6 +71,6 @@ for cntword = 1:height(TimingInfo)
        warning('low correlation')
    end 
    strl =[round(samfin-pre*fs); round(samfin+post*fs); -pre*fs; wordcode; story; story_part; condition; cor];
-   trl = [trl; strl']; %removed cntword but can be reinstalled 
+   trl = [trl; strl']; %removed cntword but can be added again  
 end
 
