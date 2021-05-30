@@ -3,7 +3,7 @@
 cfg              = [];
 cfg.trialfun     = 'audiobooktrialfun_SO';
 cfg.allowoverlap = 'yes';
-cfg.dataset = ('K:\MEGdata\sub009\sub009.ds');
+cfg.dataset = ('K:\MEGdata\sub009\sub009.ds'); %change to correspond to each subject
 cfg = ft_definetrial(cfg);
 
 cfg.channel = 'MEG'; 
